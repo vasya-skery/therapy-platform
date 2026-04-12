@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link href="/" className={styles.logo}>Clarity</Link>
+        <Link href="/" className={styles.logo}>OpenYourMind</Link>
         
         <nav className={styles.nav}>
           <Link href="/therapists">Терапевти</Link>

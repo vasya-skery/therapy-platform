@@ -3,8 +3,8 @@ import './globals.css'
 import { AuthProvider } from '@/context/AuthContext'
 
 export const metadata: Metadata = {
-  title: 'Clarity - Платформа онлайн-терапії',
-  description: 'Знайдіть кваліфікованих терапевтів. Піклуйтеся про своє ментальне здоров&apos;я з Clarity.',
+  title: 'OpenYourMind - Free Online Therapy',
+  description: 'Find licensed therapists. Free online therapy platform for your mental health.',
 }
 
 export default function RootLayout({

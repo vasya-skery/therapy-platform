@@ -22,7 +22,7 @@ export default function HowItWorks() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <h2 className={styles.title}>How Clarity works</h2>
+        <h2 className={styles.title}>How OpenYourMind works</h2>
         <div className={styles.steps}>
           {steps.map((step, index) => (
             <div key={index} className={styles.step}>

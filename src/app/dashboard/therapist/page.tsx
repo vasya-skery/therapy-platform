@@ -171,7 +171,7 @@ export default function TherapistDashboard() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <Link href="/" className={styles.logo}>Clarity</Link>
+        <Link href="/" className={styles.logo}>OpenYourMind</Link>
         <div className={styles.userMenu}>
           <span>{profile.full_name}</span>
           <button onClick={signOut}>Вийти</button>

@@ -11,7 +11,7 @@ export default function Footer() {
 
         <div className={styles.links}>
           <div className={styles.column}>
-            <h4>Clarity</h4>
+            <h4>OpenYourMind</h4>
             <a href="/about">About</a>
             <a href="/approaches">Approaches</a>
             <a href="/for-therapists">For Therapists</a>
@@ -24,12 +24,12 @@ export default function Footer() {
           </div>
           <div className={styles.column}>
             <h4>Contact</h4>
-            <a href="mailto:hello@clarity.help">hello@clarity.help</a>
+            <a href="mailto:hello@openyourmind.app">hello@openyourmind.app</a>
           </div>
         </div>
 
         <div className={styles.bottom}>
-          <p>© 2024-2025 Clarity</p>
+          <p>© 2024-2025 OpenYourMind</p>
         </div>
       </div>
     </footer>

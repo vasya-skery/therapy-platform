@@ -94,7 +94,7 @@ export default function TherapistPage() {
     <div className={styles.container}>
       <header className={styles.header}>
         <Link href="/therapists" className={styles.back}>← Назад</Link>
-        <Link href="/" className={styles.logo}>Clarity</Link>
+        <Link href="/" className={styles.logo}>OpenYourMind</Link>
       </header>
 
       <main className={styles.main}>
