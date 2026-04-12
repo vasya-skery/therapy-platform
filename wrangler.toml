@@ -1,0 +1,6 @@
+name = "therapy-platform"
+compatibility_date = "2024-04-01"
+
+[build]
+command = "npm run build"
+cwd = "."
