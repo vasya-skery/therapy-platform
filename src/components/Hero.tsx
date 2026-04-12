@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './Hero.module.css'
 
 export default function Hero() {
@@ -5,16 +6,16 @@ export default function Hero() {
     <section className={styles.hero}>
       <div className={styles.container}>
         <h1>
-          Take care of your<br />
-          <span className={styles.highlight}>mental health</span> with Clarity
+          Піклуйтесь про своє<br />
+          <span className={styles.highlight}>ментальне здоров&apos;я</span> з Clarity
         </h1>
         <p className={styles.subtitle}>
-          Connect with licensed therapists who understand you. 
-          Find your perfect match in minutes.
+          Знайдіть кваліфікованих терапевтів, які вас розуміють. 
+          Ваш ідеальний матч за лічені хвилини.
         </p>
         <div className={styles.buttons}>
-          <button className="btn-primary">Find a therapist</button>
-          <a href="/therapists" className="btn-secondary">See all therapists</a>
+          <Link href="/therapists" className="btn-primary">Знайти терапевта</Link>
+          <Link href="/auth/register" className="btn-secondary">Приєднатися безкоштовно</Link>
         </div>
       </div>
       <div className={styles.decorative}>

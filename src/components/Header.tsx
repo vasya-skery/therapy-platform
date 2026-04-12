@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import styles from './Header.module.css'
 
 export default function Header() {
@@ -9,18 +10,17 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <a href="/" className={styles.logo}>Clarity</a>
+        <Link href="/" className={styles.logo}>Clarity</Link>
         
         <nav className={styles.nav}>
-          <a href="/about">About</a>
-          <a href="/approaches">Approaches</a>
-          <a href="/for-therapists">For Therapists</a>
-          <a href="/faq">FAQ</a>
+          <Link href="/therapists">Терапевти</Link>
+          <Link href="/#about">Про нас</Link>
+          <Link href="/#faq">FAQ</Link>
         </nav>
 
         <div className={styles.actions}>
-          <a href="/login" className={styles.loginBtn}>Log in</a>
-          <button className="btn-primary">Find a therapist</button>
+          <Link href="/auth/login" className={styles.loginBtn}>Увійти</Link>
+          <Link href="/therapists" className="btn-primary">Знайти терапевта</Link>
         </div>
 
         <button 
@@ -36,12 +36,11 @@ export default function Header() {
       {isMenuOpen && (
         <div className={styles.mobileMenu}>
           <nav>
-            <a href="/about">About</a>
-            <a href="/approaches">Approaches</a>
-            <a href="/for-therapists">For Therapists</a>
-            <a href="/faq">FAQ</a>
-            <a href="/login" className={styles.loginBtn}>Log in</a>
-            <button className="btn-primary">Find a therapist</button>
+            <Link href="/therapists">Терапевти</Link>
+            <Link href="/#about">Про нас</Link>
+            <Link href="/#faq">FAQ</Link>
+            <Link href="/auth/login" className={styles.loginBtn}>Увійти</Link>
+            <Link href="/therapists" className="btn-primary">Знайти терапевта</Link>
           </nav>
         </div>
       )}

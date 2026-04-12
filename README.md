@@ -1,42 +1,83 @@
-# Therapy Platform Clone
+# Clarity - Відкрита платформа онлайн-терапії
 
-A modern therapy platform clone built with Next.js 14, deployable on Cloudflare Pages.
+Безкоштовна та відкрита альтернатива платформам для онлайн-терапії.
 
-## Features
+## Можливості
 
-- Modern, responsive design
-- Hero section with statistics
-- How it works (3-step process)
-- Team of therapists section
-- Client reviews
-- Topics we help with
-- FAQ accordion
-- Footer with links
+### Для клієнтів
+- Пошук терапевтів за спеціалізацією
+- Перегляд профілів та відгуків
+- Бронювання сесій онлайн
+- Чат з терапевтом
+- Особистий кабінет
 
-## Getting Started
+### Для терапевтів
+- Профіль з описом послуг
+- Управління записами
+- Чат з клієнтами
+- Перегляд відгуків
+
+## Технології
+
+- **Frontend**: Next.js 14 (App Router)
+- **База даних**: Supabase (PostgreSQL)
+- **Автентифікація**: Supabase Auth
+- **Резервне копіювання**: Supabase Realtime
+- **Хостинг**: Vercel (безкоштовно)
+
+## Локальний запуск
 
 ```bash
-# Install dependencies
+# Клонування репозиторію
+git clone https://github.com/vasya-skery/therapy-platform.git
+cd therapy-platform
+
+# Встановлення залежностей
 npm install
 
-# Run development server
-npm run dev
+# Створення .env.local
+cp .env.example .env.local
+# Заповніть:
+# NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+# SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-# Build for production
-npm run build
+# Запуск
+npm run dev
 ```
 
-## Deployment to Cloudflare Pages
+## Налаштування Supabase
 
-1. Push to GitHub
-2. Connect repository to Cloudflare Pages
-3. Set build command: `npm run build`
-4. Set output directory: `.next`
-5. Deploy!
+1. Створіть проект на https://supabase.com
+2. Перейдіть до SQL Editor
+3. Виконайте код з `supabase/schema.sql`
+4. Скопіюйте URL та ключі з Settings > API
 
-## Tech Stack
+## Деплой на Vercel
 
-- Next.js 14 (App Router)
-- TypeScript
-- CSS Modules
-- Cloudflare Pages
+```bash
+# Встановіть Vercel CLI
+npm i -g vercel
+
+# Деплой
+vercel
+```
+
+Або підключіть GitHub репозиторій на https://vercel.com
+
+## Ліцензія
+
+MIT License - використовуйте вільно!
+
+## TODO
+
+- [x] Автентифікація
+- [x] Профілі терапевтів
+- [x] Каталог терапевтів
+- [x] Бронювання сесій
+- [x] Чат
+- [x] Відгуки
+- [ ] Email нотифікації
+- [ ] Video conferencing
+- [ ] Admin панель
+- [ ] Документація API
