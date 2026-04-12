@@ -13,6 +13,7 @@ export default function RegisterPage() {
   const [role, setRole] = useState<'client' | 'therapist'>('client')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [emailSent, setEmailSent] = useState(false)
   const { signUp } = useAuth()
   const router = useRouter()
 
@@ -23,30 +24,48 @@ export default function RegisterPage() {
 
     try {
       await signUp(email, password, fullName, role)
-      router.push('/dashboard')
+      setEmailSent(true)
     } catch (err: any) {
-      setError(err.message || 'Помилка реєстрації')
+      setError(err.message || 'Registration error')
     } finally {
       setLoading(false)
     }
   }
 
+  if (emailSent) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <h1>Check your email</h1>
+          <p className={styles.subtitle}>
+            We sent a confirmation link to <strong>{email}</strong>.
+            <br />
+            Please click the link to verify your email.
+          </p>
+          <Link href="/auth/login" className="btn-primary" style={{ marginTop: '20px', display: 'inline-block', textAlign: 'center' }}>
+            Go to Login
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h1>Реєстрація</h1>
-        <p className={styles.subtitle}>Створіть свій акаунт</p>
+        <h1>Registration</h1>
+        <p className={styles.subtitle}>Create your account</p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           {error && <div className={styles.error}>{error}</div>}
           
           <div className={styles.field}>
-            <label>Повне ім&apos;я</label>
+            <label>Full name</label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="Олександр Петренко"
+              placeholder="John Doe"
               required
             />
           </div>
@@ -63,19 +82,19 @@ export default function RegisterPage() {
           </div>
 
           <div className={styles.field}>
-            <label>Пароль</label>
+            <label>Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Мінімум 6 символів"
+              placeholder="Min 6 characters"
               minLength={6}
               required
             />
           </div>
 
           <div className={styles.field}>
-            <label>Як ви плануєте використовувати платформу?</label>
+            <label>I want to use the platform as:</label>
             <div className={styles.roleSelect}>
               <button
                 type="button"
@@ -83,8 +102,8 @@ export default function RegisterPage() {
                 onClick={() => setRole('client')}
               >
                 <span className={styles.roleIcon}>🧑‍💼</span>
-                <span>Клієнт</span>
-                <span className={styles.roleDesc}>Шукаю терапевта</span>
+                <span>Client</span>
+                <span className={styles.roleDesc}>Looking for a therapist</span>
               </button>
               <button
                 type="button"
@@ -92,19 +111,19 @@ export default function RegisterPage() {
                 onClick={() => setRole('therapist')}
               >
                 <span className={styles.roleIcon}>🧠</span>
-                <span>Терапевт</span>
-                <span className={styles.roleDesc}>Надаю послуги</span>
+                <span>Therapist</span>
+                <span className={styles.roleDesc}>Provide therapy services</span>
               </button>
             </div>
           </div>
 
           <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? 'Завантаження...' : 'Зареєструватися'}
+            {loading ? 'Creating account...' : 'Create Account'}
           </button>
         </form>
 
         <p className={styles.footer}>
-          Вже маєте акаунт? <Link href="/auth/login">Увійти</Link>
+          Already have an account? <Link href="/auth/login">Sign in</Link>
         </p>
       </div>
     </div>

@@ -23,7 +23,7 @@ export default function LoginPage() {
       await signIn(email, password)
       router.push('/dashboard')
     } catch (err: any) {
-      setError(err.message || 'Помилка входу')
+      setError(err.message || 'Login failed')
     } finally {
       setLoading(false)
     }
@@ -32,8 +32,8 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h1>Вхід</h1>
-        <p className={styles.subtitle}>Увійдіть до свого акаунту</p>
+        <h1>Welcome back</h1>
+        <p className={styles.subtitle}>Sign in to your account</p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           {error && <div className={styles.error}>{error}</div>}
@@ -50,7 +50,7 @@ export default function LoginPage() {
           </div>
 
           <div className={styles.field}>
-            <label>Пароль</label>
+            <label>Password</label>
             <input
               type="password"
               value={password}
@@ -61,12 +61,12 @@ export default function LoginPage() {
           </div>
 
           <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? 'Завантаження...' : 'Увійти'}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
         <p className={styles.footer}>
-          Немає акаунту? <Link href="/auth/register">Зареєструватися</Link>
+          Don't have an account? <Link href="/auth/register">Create one</Link>
         </p>
       </div>
     </div>
