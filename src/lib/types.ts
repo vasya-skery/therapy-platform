@@ -59,7 +59,7 @@ export type Conversation = {
   therapist_id: string
   last_message_at: string
   created_at: string
-  profiles?: Profile[]
+  profiles?: Profile
   messages?: Message[]
 }
 
