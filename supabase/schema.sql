@@ -45,6 +45,7 @@ CREATE TABLE appointments (
   notes TEXT,
   price INTEGER NOT NULL,
   currency TEXT DEFAULT 'UAH',
+  meeting_url TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
