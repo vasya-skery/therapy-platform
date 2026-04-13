@@ -129,7 +129,7 @@ export default function TherapistPage() {
               </div>
             </div>
 
-            <p className={styles.bio}>{therapist.bioUk}</p>
+            <p className={styles.bio}>{therapist.bioEn || therapist.bioUk}</p>
 
             <div className={styles.section}>
               <h3>Підходи</h3>

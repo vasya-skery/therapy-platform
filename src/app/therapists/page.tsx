@@ -124,7 +124,7 @@ async function fetchTherapists() {
                     {therapist.specialization?.slice(0, 3).join(', ')}
                   </p>
                   <p className={styles.bio}>
-                    {therapist.bioUk?.slice(0, 100)}...
+                    {therapist.bioEn?.slice(0, 100) || therapist.bioUk?.slice(0, 100)}...
                   </p>
                   <div className={styles.meta}>
                     <span className={styles.rating}>★ {therapist.rating.toFixed(1)}</span>
