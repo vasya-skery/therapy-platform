@@ -9,20 +9,20 @@ export default function DashboardPage() {
   const router = useRouter()
 
   useEffect(() => {
-    if (!loading && user && profile) {
-      if (profile.role === 'therapist') {
+    if (!loading) {
+      if (!user) {
+        router.replace('/auth/login')
+      } else if (profile?.role === 'therapist') {
         router.replace('/dashboard/therapist')
       } else {
         router.replace('/dashboard/client')
       }
-    } else if (!loading && !user) {
-      router.replace('/auth/login')
     }
   }, [user, profile, loading, router])
 
   return (
-    <div style={{ textAlign: 'center', padding: '100px' }}>
-      Завантаження...
+    <div style={{ textAlign: 'center', padding: '100px', color: '#666' }}>
+      Loading...
     </div>
   )
 }
