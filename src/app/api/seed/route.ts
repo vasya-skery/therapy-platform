@@ -5,9 +5,11 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   if (!serviceKey) {
-    return NextResponse.json({ error: 'Service key not configured' }, { status: 500 })
+    return NextResponse.json({ error: 'Service key not configured in Vercel' }, { status: 500 })
   }
 
   const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } })
