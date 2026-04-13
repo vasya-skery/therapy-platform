@@ -21,8 +21,9 @@ export default function TherapistsPage() {
   }, [])
 
   async function fetchTopics() {
-    const { data } = await supabase.from('topics').select('*').order('nameUk')
-    if (data) setTopics(data)
+    const { data, error } = await supabase.from('topics').select('*')
+    console.log('Topics error:', error)
+    if (data) setTopics(data.sort((a, b) => (a.nameUk || '').localeCompare(b.nameUk || '')))
   }
 
   async function fetchTherapists() {
