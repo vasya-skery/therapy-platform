@@ -58,7 +58,7 @@ export async function GET() {
             role: 'therapist'
           })
           
-          await supabase.from('therapist_profiles').upsert({
+          const { error: tpError } = await supabase.from('therapist_profiles').upsert({
             id: data.user.id,
             specialization: t.specialization,
             approaches: ['CBT', 'Gestalt'],
@@ -74,7 +74,36 @@ export async function GET() {
             rating: 4.5 + Math.random() * 0.5,
             review_count: Math.floor(Math.random() * 50) + 10
           })
-          createdTherapists++
+          
+          if (tpError) {
+            console.error('Therapist profile error:', tpError)
+          } else {
+            createdTherapists++
+          }
+        }
+      } else {
+        const user = existingUsers.find(u => u.email === t.email)
+        if (user) {
+          const { data: existingTp } = await supabase.from('therapist_profiles').select('id').eq('id', user.id).single()
+          if (!existingTp) {
+            const { error: tpError } = await supabase.from('therapist_profiles').upsert({
+              id: user.id,
+              specialization: t.specialization,
+              approaches: ['CBT', 'Gestalt'],
+              education: ['University of Psychology'],
+              experience_years: t.experience,
+              languages: ['English'],
+              price_per_session: t.price,
+              currency: 'USD',
+              session_duration: 50,
+              bioEn: `I am a licensed therapist with ${t.experience} years of experience helping people overcome ${t.specialization.join(', ')}.`,
+              is_verified: true,
+              is_available: true,
+              rating: 4.5 + Math.random() * 0.5,
+              review_count: Math.floor(Math.random() * 50) + 10
+            })
+            if (!tpError) createdTherapists++
+          }
         }
       }
     }

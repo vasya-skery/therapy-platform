@@ -185,3 +185,11 @@ INSERT INTO topics (nameUk, nameEn, slug) VALUES
   ('Сум', 'Grief', 'grief'),
   ('Гнів', 'Anger', 'anger'),
   ('Самотність', 'Loneliness', 'loneliness');
+
+-- Seed therapist profiles
+INSERT INTO therapist_profiles (id, specialization, approaches, education, experience_years, languages, price_per_session, currency, session_duration, bioEn, is_verified, is_available, rating, review_count) VALUES
+  ('c7a16048-4803-458b-9b01-3b94ed6beba7', ARRAY['anxiety', 'depression'], ARRAY['CBT', 'Gestalt'], ARRAY['University of Psychology'], 10, ARRAY['English', 'Ukrainian'], 80, 'USD', 50, 'I am a licensed therapist with 10 years of experience helping people overcome anxiety and depression.', true, true, 4.8, 45),
+  ('06450494-9b60-4e2d-ad6c-6e519f4a0459', ARRAY['trauma', 'PTSD'], ARRAY['EMDR', 'CBT'], ARRAY['Medical University'], 15, ARRAY['English'], 100, 'USD', 50, 'Specializing in trauma recovery and PTSD treatment with 15 years of experience.', true, true, 4.9, 82),
+  ('287ba6b4-df91-49d3-b01b-fe81c505ef43', ARRAY['relationships', 'family'], ARRAY['Systemic', 'Family'], ARRAY['Institute of Family Therapy'], 8, ARRAY['Ukrainian', 'English'], 70, 'USD', 50, 'Helping individuals and couples navigate relationship challenges.', true, true, 4.6, 38),
+  ('7471c2a6-8feb-4e80-adb5-cc5615fcac22', ARRAY['stress', 'work'], ARRAY['CBT', 'Mindfulness'], ARRAY['Business Psychology Institute'], 12, ARRAY['Ukrainian', 'English'], 90, 'USD', 50, 'Work-related stress and burnout specialist with corporate experience.', true, true, 4.7, 56),
+  ('cbe627a8-085e-4ee6-abe4-d45e60d0148a', ARRAY['anxiety', 'depression'], ARRAY['ACT', 'CBT'], ARRAY['Clinical Psychology Master'], 6, ARRAY['Ukrainian'], 60, 'USD', 50, 'Passionate about helping young adults with anxiety and depression.', true, true, 4.5, 22);
