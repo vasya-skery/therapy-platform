@@ -18,16 +18,29 @@ export default function ClientDashboard() {
   const [newMessage, setNewMessage] = useState('')
   const [activeTab, setActiveTab] = useState<'appointments' | 'messages'>('appointments')
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (!authLoading && !user) {
       router.push('/auth/login')
     }
-    if (user) {
-      fetchAppointments()
-      fetchConversations()
+  }, [user, authLoading, router])
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      fetchAppointments().catch(e => setError('Appointments: ' + e.message))
+      fetchConversations().catch(e => setError('Conversations: ' + e.message))
     }
   }, [user, authLoading])
+
+  if (authLoading || loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '100px', color: '#666' }}>
+        Loading... Auth: {authLoading ? 'loading' : 'done'}, User: {user?.email || 'none'}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+      </div>
+    )
+  }
 
   useEffect(() => {
     if (selectedConversation) {
