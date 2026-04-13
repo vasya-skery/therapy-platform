@@ -26,26 +26,19 @@ export default function TherapistsPage() {
   }
 
   async function fetchTherapists() {
-    let query = supabase
+    const { data, error } = await supabase
       .from('therapist_profiles')
       .select(`
         *,
         profiles (*)
       `)
-      .eq('is_available', true)
+      .order('rating', { ascending: false })
 
-    if (search) {
-      query = query.textSearch('bioUk', search)
-    }
-
-    const { data, error } = await query.order('rating', { ascending: false })
+    console.log('Therapists error:', error)
+    console.log('Therapists data:', data)
     
     if (data) {
-      let filtered = data as TherapistWithProfile[]
-      if (selectedTopic) {
-        filtered = filtered.filter(t => t.specialization?.includes(selectedTopic))
-      }
-      setTherapists(filtered)
+      setTherapists(data as TherapistWithProfile[])
     }
     setLoading(false)
   }
