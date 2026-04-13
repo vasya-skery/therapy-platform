@@ -32,7 +32,7 @@ export default function DashboardPage() {
       <p>User: {user?.email}</p>
       <p>Profile: {JSON.stringify(profile)}</p>
       <p>Error: {error}</p>
-      <button onClick={() => router.reload()}>Reload</button>
+      <button onClick={() => window.location.reload()}>Reload</button>
     </div>
   )
 }
