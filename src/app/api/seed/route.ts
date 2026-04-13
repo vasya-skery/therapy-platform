@@ -36,11 +36,12 @@ export async function GET() {
   ]
 
   try {
-    const { data: { users: existingUsers } } = await supabase.auth.admin.listUsers()
+    const { data: usersData } = await supabase.auth.admin.listUsers()
+    const existingUsers = usersData?.users || []
     let createdTherapists = 0
 
     for (const t of therapists) {
-      const userExists = existingUsers?.users.some(u => u.email === t.email)
+      const userExists = existingUsers.some(u => u.email === t.email)
       
       if (!userExists) {
         const { data, error } = await supabase.auth.admin.createUser({
