@@ -58,6 +58,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     if (data && !error) {
       setProfile(data)
+    } else if (error?.code === 'PGRST116') {
+      const { data: userData } = await supabase.auth.getUser()
+      if (userData?.user?.email) {
+        await supabase.from('profiles').upsert({
+          id: userId,
+          email: userData.user.email,
+          full_name: userData.user.user_metadata?.full_name || 'User',
+          role: 'client'
+        })
+        setProfile({
+          id: userId,
+          email: userData.user.email,
+          full_name: userData.user.user_metadata?.full_name || 'User',
+          avatar_url: null,
+          role: 'client',
+          phone: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+      }
     }
     setLoading(false)
   }
