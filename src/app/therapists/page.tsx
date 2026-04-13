@@ -26,18 +26,19 @@ export default function TherapistsPage() {
     if (data) setTopics(data.sort((a, b) => (a.nameUk || '').localeCompare(b.nameUk || '')))
   }
 
-  async function fetchTherapists() {
+async function fetchTherapists() {
     const { data, error } = await supabase
       .from('therapist_profiles')
       .select(`
         *,
         profiles (*)
       `)
-      .order('rating', { ascending: false })
 
-    console.log('Therapists error:', error)
-    console.log('Therapists data:', data)
-    
+    if (error) {
+      console.error('Error:', error)
+    }
+    console.log('Data:', data)
+
     if (data) {
       setTherapists(data as TherapistWithProfile[])
     }
