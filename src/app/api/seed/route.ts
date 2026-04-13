@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
 import { createClient } from '@supabase/supabase-js'
 
-export async function POST() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+
+export async function GET() {
+  if (!serviceKey) {
+    return NextResponse.json({ error: 'Service key not configured' }, { status: 500 })
+  }
+
+  const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } })
 
   const testPassword = 'test123456'
 
@@ -29,9 +34,11 @@ export async function POST() {
   ]
 
   try {
+    const { data: { users: existingUsers } } = await supabase.auth.admin.listUsers()
+    let createdTherapists = 0
+
     for (const t of therapists) {
-      const { data: existing } = await supabase.auth.admin.listUsers()
-      const userExists = existing?.users.some(u => u.email === t.email)
+      const userExists = existingUsers?.users.some(u => u.email === t.email)
       
       if (!userExists) {
         const { data, error } = await supabase.auth.admin.createUser({
@@ -40,7 +47,7 @@ export async function POST() {
           email_confirm: true
         })
         
-        if (data?.user) {
+        if (data?.user && !error) {
           await supabase.from('profiles').upsert({
             id: data.user.id,
             email: t.email,
@@ -64,63 +71,23 @@ export async function POST() {
             rating: 4.5 + Math.random() * 0.5,
             review_count: Math.floor(Math.random() * 50) + 10
           })
+          createdTherapists++
         }
       }
     }
 
-    await supabase.from('topics').upsert(topics, { onConflict: 'slug' })
-
-    const { data: { users } } = await supabase.auth.admin.listUsers()
-    const therapistUsers = users?.filter(u => u.email?.includes('@therapist.com')) || []
+    const { data: allTopics } = await supabase.from('topics').select('slug')
+    const existingSlugs = allTopics?.map(t => t.slug) || []
+    const newTopics = topics.filter(t => !existingSlugs.includes(t.slug))
     
-    if (therapistUsers.length > 0) {
-      const clientUsers = users?.filter(u => u.email === 'test@openyourmind.app')
-      const clientId = clientUsers?.[0]?.id
-
-      if (clientId) {
-        const conv = await supabase.from('conversations').select('*').eq('client_id', clientId).maybeSingle()
-        
-        if (!conv) {
-          const therapistId = therapistUsers[0].id
-          const { data: conversation } = await supabase.from('conversations').insert({
-            client_id: clientId,
-            therapist_id: therapistId,
-            last_message_at: new Date().toISOString()
-          }).select().maybe()
-
-          if (conversation?.[0]) {
-            await supabase.from('messages').insert([
-              {
-                conversation_id: conversation[0].id,
-                sender_id: clientId,
-                content: 'Hello, I need help with anxiety issues',
-                is_read: true,
-                created_at: new Date(Date.now() - 3600000).toISOString()
-              },
-              {
-                conversation_id: conversation[0].id,
-                sender_id: therapistId,
-                content: 'Hello! I would be happy to help you. Can you tell me more about what you are experiencing?',
-                is_read: true,
-                created_at: new Date(Date.now() - 1800000).toISOString()
-              },
-              {
-                conversation_id: conversation[0].id,
-                sender_id: clientId,
-                content: 'I have been feeling overwhelmed lately...',
-                is_read: false,
-                created_at: new Date().toISOString()
-              }
-            ])
-          }
-        }
-      }
+    if (newTopics.length > 0) {
+      await supabase.from('topics').insert(newTopics)
     }
 
     return NextResponse.json({ 
       message: 'Seed completed',
-      therapists: therapists.length,
-      topics: topics.length
+      therapistsCreated: createdTherapists,
+      topicsCount: topics.length
     })
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
